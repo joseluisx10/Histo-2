@@ -18,6 +18,5 @@ public interface CancionRepository extends JpaRepository<Cancion, Long> {
     @Query("SELECT c FROM Cancion c WHERE LOWER(c.letra) LIKE LOWER(CONCAT('%', :letra, '%')) OR LOWER(c.letra) = LOWER(:letra)")
     public Optional<Cancion> findByLetra(@Param("letra") String letra);
 
-    List<Cancion> findAllByArtista(Artista artista);
 }
 

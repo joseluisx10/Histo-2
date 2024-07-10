@@ -8,33 +8,35 @@ import java.util.ArrayList;
 @Entity @Table(name = "canciones")
 public class Cancion {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
     private String letra;
 
 
-    private String genero;
-
+    //private String genero;
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private Disco disco;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "artista_id")
     @JsonIgnore
     private Artista artista;
 
     public Cancion() {}
 
-    public Cancion(String nombre, String letra, String genero) {
+    public Cancion(String nombre, String letra, Genero genero) {
         this.nombre = nombre;
         this.letra = letra;
         this.genero = genero;
     }
 
     // Getters y Setters
-    public void setGenero(String genero) {this.genero = genero;}
+    // public void setGenero(String genero) {this.genero = genero;}
 
 
     public Long getId() {
@@ -66,7 +68,15 @@ public class Cancion {
         this.artista = artista;
     }
 
-    public String getGenero() {
+    /*public String getGenero() {
         return genero;
+    }*/
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
     }
 }

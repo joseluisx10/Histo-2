@@ -24,12 +24,17 @@ public class CancionController {
     public ResponseEntity<Cancion> crearCancion(@RequestBody Map<String, Object> requestBody) {
         String nombre = requestBody.get("nombre").toString();
         String letra = requestBody.get("letra").toString();
-        String genero = requestBody.get("genero").toString().toUpperCase();
-        if (!isValidoGenero(genero)) {
+        String generoStr = requestBody.get("genero").toString();
+        Genero genero;
+        try {
+            genero = Genero.valueOf(generoStr.toUpperCase());
+        } catch (IllegalArgumentException | NullPointerException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(cancionService.crear(nombre, letra, genero), HttpStatus.CREATED);
+        // Crear la nueva canción usando el servicio
+        Cancion nuevaCancion = cancionService.crear(nombre, letra, genero);
+        return new ResponseEntity<>(nuevaCancion, HttpStatus.CREATED);
     }
     //MODIFICAR UNA CANCION POR SU ID
     //http://localhost:8080/canciones/modificar/1
@@ -41,7 +46,8 @@ public class CancionController {
         if (!isValidoGenero(genero)) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(this.cancionService.actualizarCancion(id, nombre, letra, genero), HttpStatus.OK);
+        Genero generoEnum = Genero.valueOf(genero);
+        return new ResponseEntity<>(this.cancionService.actualizarCancion(id, nombre, letra, generoEnum),  HttpStatus.OK);
     }
     //BUSCAR UNA CANCION POR NOMBRE
     //http://localhost:8080/canciones/nombre/..

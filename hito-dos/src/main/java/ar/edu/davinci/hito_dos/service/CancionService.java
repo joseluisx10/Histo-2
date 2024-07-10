@@ -1,6 +1,7 @@
 package ar.edu.davinci.hito_dos.service;
 
 import ar.edu.davinci.hito_dos.model.Cancion;
+import ar.edu.davinci.hito_dos.model.Genero;
 import ar.edu.davinci.hito_dos.repository.CancionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public class CancionService {
     @Autowired
     public CancionRepository cancionRepository;
 
-    public Cancion crear(String nombre, String letra, String genero) {
+    public Cancion crear(String nombre, String letra, Genero genero) {
         Cancion nuevacancion = new Cancion(nombre, letra, genero);
         cancionRepository.save(nuevacancion);
         return nuevacancion;
@@ -30,7 +31,7 @@ public class CancionService {
         return cancionRepository.findByLetra(letra);
     }
 
-    public Cancion actualizarCancion(Long id, String nombre, String letra, String genero) {
+    public Cancion actualizarCancion(Long id, String nombre, String letra, Genero genero) {
         Cancion nuevacancion = new Cancion(nombre, letra, genero);
         nuevacancion.setId(id);
         cancionRepository.save(nuevacancion);

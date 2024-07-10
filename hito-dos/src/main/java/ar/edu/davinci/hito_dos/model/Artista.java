@@ -2,6 +2,7 @@ package ar.edu.davinci.hito_dos.model;
 
 import jakarta.persistence.*;
 
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,26 +29,29 @@ public class Artista {
     @Column(name = "instrumento")
     private List<Instrumento> instrumentos;
 
-    private String biografia;
+    private String bibliografia;
 
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<Disco> discosGrabados;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cancion> canciones;
 
-    public Artista() {}
-
-    public Artista(String nombre, String paisOrigen, Date fechaNacimiento, Date fechaFallecimiento, Instrumento instrumentos, String biografia) {
-        this.nombre = nombre;
+    public Artista() {
+        this.canciones = new ArrayList<>();
         this.generos = new ArrayList<>();
+    }
+
+    public Artista(String nombre, String paisOrigen, Date fechaNacimiento, Date fechaFallecimiento, Instrumento instrumentos, String bibliografia) {
+        this.nombre = nombre;
+
         this.paisOrigen = paisOrigen;
         this.fechaNacimiento = fechaNacimiento;
         this.fechaFallecimiento = fechaFallecimiento;
         this.instrumentos = new ArrayList<>();
-        this.biografia = biografia;
+        this.bibliografia = bibliografia;
         this.discosGrabados = new ArrayList<>();
-        this.canciones = new ArrayList<>();
+
     }
 
     public Long getId() {
@@ -106,12 +110,12 @@ public class Artista {
         this.fechaFallecimiento = fechaFallecimiento;
     }
 
-    public String getBiografia() {
-        return biografia;
+    public String getBibliografia() {
+        return bibliografia;
     }
 
-    public void setBiografia(String biografia) {
-        this.biografia = biografia;
+    public void setBibliografia(String biografia) {
+        this.bibliografia = biografia;
     }
 
     public List<Disco> getDiscosGrabados() {
@@ -122,16 +126,14 @@ public class Artista {
         this.discosGrabados.add(discosGrabado);
     }
 
-    public void addCancion(Cancion cancion) {
-        this.canciones.add(cancion);
+    public Cancion addCancion(Cancion cancion) {
         cancion.setArtista(this);
-    }
-
-    public void addCanciones(List<Cancion> canciones) {
-        for (Cancion cancion : canciones) {
-            cancion.setArtista(this);
-            this.canciones.add(cancion);
+        if(!this.generos.contains(cancion.getGenero())){
+            this.generos.add(cancion.getGenero());
         }
+
+        this.canciones.add(cancion);
+        return cancion;
     }
 
     public List<Cancion> getCanciones() {

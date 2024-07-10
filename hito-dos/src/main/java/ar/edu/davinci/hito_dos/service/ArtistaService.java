@@ -1,6 +1,7 @@
 package ar.edu.davinci.hito_dos.service;
 
 import ar.edu.davinci.hito_dos.model.Artista;
+import ar.edu.davinci.hito_dos.model.Cancion;
 import ar.edu.davinci.hito_dos.model.Genero;
 import ar.edu.davinci.hito_dos.model.Instrumento;
 import ar.edu.davinci.hito_dos.repository.ArtistaRepository;
@@ -19,8 +20,14 @@ public class ArtistaService {
     private CancionRepository cancionRepository;
 
     public Artista crear(Artista artista) {
-        artistaRepository.save(artista);
-        return artista;
+        artista = artistaRepository.save(artista);
+        List<Cancion> canciones = cancionRepository.findAll();
+        for (Cancion cancion : canciones) {
+            artista.addCancion(cancion); // Añadir la canción a la lista del artista
+            cancionRepository.save(cancion);
+        }
+
+        return artistaRepository.save(artista);
     }
 
     public List<Artista> getAllArtistas() {
