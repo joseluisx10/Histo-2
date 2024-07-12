@@ -152,6 +152,9 @@ public class Artista {
 
     public Cancion addCancion(Cancion nuevacancion) {
         nuevacancion.setArtista(this);
+        if(!this.generos.contains(nuevacancion.getGenero())){
+            this.generos.add(nuevacancion.getGenero());
+        }
         this.canciones.add(nuevacancion);
         return nuevacancion;
     }
