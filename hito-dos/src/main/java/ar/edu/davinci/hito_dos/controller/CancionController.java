@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public class CancionController {
     //CREAR NUEVA CANCION
     //http://localhost:8080/canciones/crear
     @PostMapping("/crear")
-    public ResponseEntity<Cancion> crearCancion(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<Cancion> crearCancion(@RequestParam Long artistaId, @RequestBody Map<String, Object> requestBody) {
         String nombre = requestBody.get("nombre").toString();
         String letra = requestBody.get("letra").toString();
         String generoStr = requestBody.get("genero").toString();
@@ -33,7 +34,7 @@ public class CancionController {
         }
 
         // Crear la nueva canción usando el servicio
-        Cancion nuevaCancion = cancionService.crear(nombre, letra, genero);
+        Cancion nuevaCancion = cancionService.crear(nombre, letra, genero, artistaId);
         return new ResponseEntity<>(nuevaCancion, HttpStatus.CREATED);
     }
     //MODIFICAR UNA CANCION POR SU ID

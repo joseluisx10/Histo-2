@@ -149,4 +149,10 @@ public class Artista {
     public List<Cancion> getCanciones() {
         return canciones;
     }
+
+    public Cancion addCancion(Cancion nuevacancion) {
+        nuevacancion.setArtista(this);
+        this.canciones.add(nuevacancion);
+        return nuevacancion;
+    }
 }
