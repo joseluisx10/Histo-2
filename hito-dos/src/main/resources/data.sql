@@ -28,12 +28,5 @@ CREATE TABLE IF NOT EXISTS canciones (
 );
 
 
--- Insertar datos en la tabla canciones
-INSERT INTO canciones (nombre, letra, genero) VALUES
-('Canción 1', 'Letra de la canción 1', 'ROCK'),
-('Canción 2', 'Letra de la canción 2', 'JAZZ'),
-('Canción 3', 'Letra de la canción 3', 'JAZZ'),
-('Canción 4', 'Letra de la canción 4', 'ROCK'),
-('Canción 5', 'Letra de la canción 5', 'ROCK');
 
 

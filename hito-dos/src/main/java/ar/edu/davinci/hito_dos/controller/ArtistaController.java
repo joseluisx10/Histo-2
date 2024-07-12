@@ -26,8 +26,8 @@ public class ArtistaController {
 
 
     @PostMapping("/crear")
-    public ResponseEntity<Artista> crear(@RequestBody Artista artista) {
-        Artista artistaNuevo = artistaService.crear(artista);
+    public ResponseEntity<Artista> crear(@RequestParam List<Long> discoIds, @RequestBody Artista artista) {
+        Artista artistaNuevo = artistaService.crearArtista(discoIds, artista);
         return new ResponseEntity<>(artistaNuevo, HttpStatus.CREATED);
     }
     @GetMapping("/id/{id}")

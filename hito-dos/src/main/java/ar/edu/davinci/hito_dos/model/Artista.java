@@ -1,5 +1,7 @@
 package ar.edu.davinci.hito_dos.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name="artistas")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Artista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +43,7 @@ public class Artista {
     public Artista() {
         this.canciones = new ArrayList<>();
         this.generos = new ArrayList<>();
+        this.discosGrabados = new ArrayList<>();
     }
 
     public Artista(String nombre, String paisOrigen, Date fechaNacimiento, Date fechaFallecimiento, Instrumento instrumentos, String bibliografia) {
@@ -50,7 +54,7 @@ public class Artista {
         this.fechaFallecimiento = fechaFallecimiento;
         this.instrumentos = new ArrayList<>();
         this.bibliografia = bibliografia;
-        this.discosGrabados = new ArrayList<>();
+
 
     }
 
@@ -126,7 +130,7 @@ public class Artista {
         this.discosGrabados.add(discosGrabado);
     }
 
-    public Cancion addCancion(Cancion cancion) {
+    /*public Cancion addCancion(Cancion cancion) {
         cancion.setArtista(this);
         if(!this.generos.contains(cancion.getGenero())){
             this.generos.add(cancion.getGenero());
@@ -134,6 +138,12 @@ public class Artista {
 
         this.canciones.add(cancion);
         return cancion;
+    }*/
+
+    public Disco addDisco(Disco disco) {
+        disco.setArtista(this);
+        this.discosGrabados.add(disco);
+        return disco;
     }
 
     public List<Cancion> getCanciones() {

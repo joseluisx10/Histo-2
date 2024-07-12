@@ -1,13 +1,12 @@
 package ar.edu.davinci.hito_dos.service;
 
-import ar.edu.davinci.hito_dos.model.Artista;
-import ar.edu.davinci.hito_dos.model.Cancion;
-import ar.edu.davinci.hito_dos.model.Genero;
-import ar.edu.davinci.hito_dos.model.Instrumento;
+import ar.edu.davinci.hito_dos.model.*;
 import ar.edu.davinci.hito_dos.repository.ArtistaRepository;
 import ar.edu.davinci.hito_dos.repository.CancionRepository;
+import ar.edu.davinci.hito_dos.repository.DiscoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,17 +15,19 @@ import java.util.Optional;
 public class ArtistaService {
     @Autowired
     private ArtistaRepository artistaRepository;
+
     @Autowired
-    private CancionRepository cancionRepository;
+    private DiscoRepository discoRepository;
 
-    public Artista crear(Artista artista) {
+
+
+    public Artista crearArtista(List<Long> discoIds, Artista artista) {
         artista = artistaRepository.save(artista);
-        List<Cancion> canciones = cancionRepository.findAll();
-        for (Cancion cancion : canciones) {
-            artista.addCancion(cancion); // Añadir la canción a la lista del artista
-            cancionRepository.save(cancion);
+        List<Disco> discos = discoRepository.findAllById(discoIds);
+        for (Disco disco : discos) {
+            disco = artista.addDisco(disco);
+            discoRepository.save(disco);
         }
-
         return artistaRepository.save(artista);
     }
 

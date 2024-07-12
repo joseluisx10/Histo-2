@@ -1,6 +1,8 @@
 package ar.edu.davinci.hito_dos.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -8,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Table(name = "discos")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Disco {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
     private String nombre;
 
@@ -25,7 +28,6 @@ public class Disco {
     private List<Cancion> canciones;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
     private Artista artista;
 
     public Disco() {}
