@@ -41,4 +41,8 @@ public class DiscoService {
         return disco;
     }
 
+    public double getPromedioPuntajeDiscos(Long discoId) {
+        Disco disco = discoRepository.findById(discoId).get();
+        return disco.calcularPromedioPuntaje();
+    }
 }

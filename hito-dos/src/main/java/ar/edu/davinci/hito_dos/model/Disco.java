@@ -30,6 +30,9 @@ public class Disco {
     @ManyToOne(cascade = CascadeType.ALL)
     private Artista artista;
 
+    @OneToMany(mappedBy = "disco", cascade = CascadeType.ALL)
+    private List<Puntaje> puntajes = new ArrayList<>();
+
     public Disco() {}
 
     public Disco(String nombre, Date fechaLanzamineto) {
@@ -95,5 +98,13 @@ public class Disco {
 
     public void setArtista(Artista artista) {
         this.artista = artista;
+    }
+
+    public void addPuntaje(Puntaje puntaje) {
+        this.puntajes.add(puntaje);
+    }
+
+    public double calcularPromedioPuntaje() {
+        return this.puntajes.stream().mapToDouble(Puntaje::getPuntaje).average().orElse(0.0);
     }
 }

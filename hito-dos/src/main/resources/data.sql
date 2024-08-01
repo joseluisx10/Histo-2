@@ -27,6 +27,20 @@ CREATE TABLE IF NOT EXISTS canciones (
     FOREIGN KEY (disco_id) REFERENCES discos(id)
 );
 
-
+CREATE TABLE IF NOT EXISTS usuarios (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS puntajes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id BIGINT,
+    disco_id BIGINT,
+    cancion_id BIGINT,
+    puntaje DOUBLE NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (disco_id) REFERENCES discos(id),
+    FOREIGN KEY (cancion_id) REFERENCES canciones(id)
+);
 
 

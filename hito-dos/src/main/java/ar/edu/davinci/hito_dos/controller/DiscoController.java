@@ -50,4 +50,9 @@ public class DiscoController {
         return new ResponseEntity<>(discos, HttpStatus.OK);
     }
 
+    @GetMapping("/{discoId}/promedio-puntaje")
+    public double getPromedioPuntaje(@PathVariable Long discoId) {
+        return discoService.getPromedioPuntajeDiscos(discoId);
+    }
+
 }
