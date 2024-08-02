@@ -12,8 +12,9 @@ import java.util.List;
 @Entity @Table(name = "discos")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Disco {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nombre;
 
     @ElementCollection(targetClass = Genero.class)
@@ -24,16 +25,18 @@ public class Disco {
 
     private Date fechaLanzamiento;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "disco", cascade = CascadeType.ALL)
     private List<Cancion> canciones;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "artista_id")
     private Artista artista;
 
     @OneToMany(mappedBy = "disco", cascade = CascadeType.ALL)
     private List<Puntaje> puntajes = new ArrayList<>();
 
-    public Disco() {}
+    public Disco() {
+    }
 
     public Disco(String nombre, Date fechaLanzamineto) {
         this.nombre = nombre;
@@ -41,7 +44,6 @@ public class Disco {
         this.fechaLanzamiento = fechaLanzamineto;
         this.canciones = new ArrayList<>();
     }
-
 
 
     public String getNombre() {
@@ -101,10 +103,13 @@ public class Disco {
     }
 
     public void addPuntaje(Puntaje puntaje) {
+        puntaje.addDisco(this);
         this.puntajes.add(puntaje);
     }
 
-    public double calcularPromedioPuntaje() {
-        return this.puntajes.stream().mapToDouble(Puntaje::getPuntaje).average().orElse(0.0);
+    public String calcularPromedioPuntaje() {
+        double promedio = this.puntajes.stream().mapToDouble(Puntaje::getPuntaje).average().orElse(0.0);
+        return String.valueOf(promedio);
     }
+
 }

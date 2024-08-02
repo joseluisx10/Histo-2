@@ -58,7 +58,17 @@ public class Usuario {
     }
 
     public void addPuntaje(Puntaje puntaje) {
-        this.puntajes.add(puntaje);
         puntaje.setUsuario(this);
+        this.puntajes.add(puntaje);
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", puntajes=" + puntajes +
+                '}';
     }
 }

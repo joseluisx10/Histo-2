@@ -51,7 +51,7 @@ public class DiscoController {
     }
 
     @GetMapping("/{discoId}/promedio-puntaje")
-    public double getPromedioPuntaje(@PathVariable Long discoId) {
+    public String getPromedioPuntaje(@PathVariable Long discoId) {
         return discoService.getPromedioPuntajeDiscos(discoId);
     }
 

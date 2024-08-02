@@ -34,7 +34,7 @@ public class Artista {
 
     private String bibliografia;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
     private List<Disco> discosGrabados;
 
     @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, orphanRemoval = true)

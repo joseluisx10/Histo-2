@@ -27,12 +27,25 @@ public class PuntajeService {
 
     public Puntaje puntuarDisco(Long discoId, Long usuarioId, double puntajeValor) {
         if (puntajeValor < 0 || puntajeValor > 5) {
-            throw new RuntimeException("El puntaje debe estar entre 0 y 5.");
+            throw new RuntimeException("El puntaje debe estar entre 0 y 5." + "usu: " + usuarioId + "disc: " + discoId);
         }
+
         Usuario usuario = usuarioRepository.findById(usuarioId).get();
+        System.out.println(usuario.toString());
         Disco disco = discoRepository.findById(discoId).get();
         Puntaje puntaje = new Puntaje(usuario, disco, puntajeValor);
-        return puntajeRepository.save(puntaje);
+
+        // Añadir puntaje a disco y usuario
+        disco.addPuntaje(puntaje);
+        usuario.addPuntaje(puntaje);
+
+        // Guardar los cambios
+        puntajeRepository.save(puntaje);
+        discoRepository.save(disco);
+        usuarioRepository.save(usuario);
+        System.out.println("Puntaje: " + puntaje.getPuntaje());
+        return puntaje;
+
     }
 
     public Puntaje puntuarCancion(Long cancionId, Long usuarioId, double puntajeValor) {

@@ -1,10 +1,13 @@
 package ar.edu.davinci.hito_dos.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "puntajes")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Puntaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,14 +17,14 @@ public class Puntaje {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "disco_id", nullable = true)
     private Disco disco;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cancion_id", nullable = true)
     private Cancion cancion;
-
+    @Column(name = "puntaje", nullable = false)
     private double puntaje;
 
     public Puntaje() {}
@@ -46,4 +49,15 @@ public class Puntaje {
         return this.puntaje;
     }
 
+    public Cancion getCancion() {
+        return this.cancion;
+    }
+
+    public void addDisco(Disco disco) {
+        this.disco = disco;
+    }
+
+    public void setDisco(Disco disco) {
+        this.disco = disco;
+    }
 }

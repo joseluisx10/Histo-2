@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nombre VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL
 );
+
 CREATE TABLE IF NOT EXISTS puntajes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     usuario_id BIGINT,
@@ -44,3 +45,8 @@ CREATE TABLE IF NOT EXISTS puntajes (
 );
 
 
+INSERT INTO usuarios (nombre, email) VALUES ('Juan Perez', 'juan.perez@example.com');
+INSERT INTO usuarios (nombre, email) VALUES ('Maria Garcia', 'maria.garcia@example.com');
+INSERT INTO usuarios (nombre, email) VALUES ('Pedro Martinez', 'pedro.martinez@example.com');
+INSERT INTO usuarios (nombre, email) VALUES ('Ana Lopez', 'ana.lopez@example.com');
+INSERT INTO usuarios (nombre, email) VALUES ('Luis Rodriguez', 'luis.rodriguez@example.com');

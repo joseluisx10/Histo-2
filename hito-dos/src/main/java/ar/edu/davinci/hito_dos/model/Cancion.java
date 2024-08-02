@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Table(name = "canciones")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -22,11 +23,15 @@ public class Cancion {
     private Genero genero;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "disco_id")
     private Disco disco;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "artista_id")
     private Artista artista;
+
+    @OneToMany(mappedBy = "cancion", cascade = CascadeType.ALL)
+    private List<Puntaje> puntajes = new ArrayList<>();
 
     public Cancion() {}
 
@@ -79,5 +84,9 @@ public class Cancion {
 
     public void setGenero(Genero genero) {
         this.genero = genero;
+    }
+
+    public void addPuntaje(Puntaje puntaje) {
+        this.puntajes.add(puntaje);
     }
 }
